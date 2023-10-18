@@ -1,0 +1,46 @@
+html {
+    height: 100%;
+    width: 100%;
+  }
+  body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #2A0D3C;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
+  }
+  
+  .principal{
+    display: block;
+    color: white;
+  }
+  
+  
+  .Registro{
+    background-color: #2A0D3C;
+    color: white;
+    width: 650px;
+    position: relative;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  
+  #go{
+    background-color: #021fd9;
+    color: white;
+    width: 150px;
+    height: 60px;
+    position: relative;
+    top: 250px;
+    right: 70px;
+    left: 0px;
+    text-align: center;
+  }
+  
+  label, input {
+    display: block;
+    margin-bottom: 10px; /* Aumenta o espaçamento entre os elementos */
+    width: 100%; /* Preenche a largura disponível */
+  }
