@@ -1,0 +1,123 @@
+import Image from 'next/image'
+import Head from 'next/head'
+import { useEffect } from 'react';
+
+export default function Home() {
+  
+
+
+  // Função para redirecionar para a página de login
+  const redirectToLogin = () => {
+    window.location.href = '/src/pages/login'; // Substitua pelo caminho real da sua página de login
+  }
+
+  // Função para redirecionar para a página de registro
+  const redirectToRegister = () => {
+    window.location.href = '/src/pages/register'; // Substitua pelo caminho real da sua página de registro
+  }
+
+ 
+  }, []);
+
+  return (
+    <div>
+      <head>
+  <title>NOME</title>
+  <style>
+
+      .meu-botao-nome {
+          background-color: #2580a4;
+          color: #fff;
+          padding: 20px 75px; /* Espaçamento interno (altura x largura) */
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          position: relative;
+          top: 550px;
+          left: 820px;
+      }
+
+      .meu-botao-nome:hover {
+          background-color: #2980d9; 
+      }
+  </style>
+
+  <title>GENERO</title>
+  <style>
+
+      .meu-botao-genero {
+          background-color: #2580a4;
+          color: #fff;
+          padding: 20px 75px; /* Espaçamento interno (altura x largura) */
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          position: relative;
+          top: 650px;
+          left: 620px;
+      }
+
+      .meu-botao-genero:hover {
+          background-color: #2980d9; 
+      }
+  </style>
+
+  <title>IDADE</title>
+  <style>
+
+      .meu-botao-idade {
+          background-color: #2580a4;
+          color: #fff;
+          padding: 20px 75px; 
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          position: relative;
+          top: 750px;
+          left: 420px;
+      }
+
+      .meu-botao-idade:hover {
+          background-color: #2980d9; 
+      }
+  </style>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+        .imagem-posicionada {
+            position: relative;
+            top: 150px;
+            left: 750px;
+        }
+    </style>
+
+
+
+  
+</head>
+
+<body style = "background-color: #523d76">
+  <button class="meu-botao-nome">NOME</button>
+
+  <button class="meu-botao-genero">GENERO</button>
+
+  <button class="meu-botao-idade">IDADE</button>
+  
+  <script src="script.js"></script>
+  
+  <div class="imagem-posicionada">
+    <img src="Design_sem_nome__2_-removebg-preview.png" width="300" height="270">
+  </div>
+
+  
+  <script src="https://replit.com/public/js/replit-badge-v2.js" theme="dark" position="bottom-right"></script>
+  
+</body>
+
+</html>
+    </div>
+  );
+}
