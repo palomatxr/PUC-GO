@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@maptiler/sdk": "^1.1.2",
     "firebase": "^10.4.0",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
     "@types/node": "latest",
