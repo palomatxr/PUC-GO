@@ -20,8 +20,10 @@ bun dev
 
 Abra [http://localhost:3000](http://localhost:3000) para ver o resultado.
 
-Agora basta acresentar junto ao localhost o '/nome_da_pagina' que deseja.
-Pginas em funcionamento : 
+** OBS: O RESULTADO DEVE SER UM 404  **
+
+Agora basta acresentar junto ao localhost + o '/nome_da_pagina' que deseja.
+Paginas em funcionamento : 
 
 - [Start] - com o path '/start' terá acesso a tela inicial com elementos de direcionamento para 'login' ou 'register' 
 - [Login] - com o path '/login' terá acesso a autenticação do usuario 
