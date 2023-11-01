@@ -1,7 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
 
-export default function RecuperarSenha() {
+export default function LoginPage() {
+  
+    const toLogin = () => {
+        // Usamos o componente Link para navegação no Next.js
+        // Substitua '/login' pelo caminho real da sua página de login
+        window.location.href = '/principal';
+      };
+
   return (
     <div>
       <Head>
@@ -16,14 +23,14 @@ export default function RecuperarSenha() {
           justify-content: center;
           align-items: center;
           height: 100%;
-      }
+        }
 
-      .principal {
+        .principal {
           display: block;
           text-align: center;
-      }
+        }
 
-      .Registro {
+        .Registro {
           font-family: Verdana, Geneva, Tahoma, sans-serif;
           background-color: #2A0D3C;
           color: white;
@@ -33,9 +40,9 @@ export default function RecuperarSenha() {
           text-align: center;
           border: 1px solid #ccc;
           border-radius: 5px;
-      }
+        }
 
-      #go {
+        #go {
           background-color: #021fd9;
           color: white;
           width: 150px;
@@ -47,40 +54,35 @@ export default function RecuperarSenha() {
           border: none;
           border-radius: 5px;
           cursor: pointer;
-      }
+        }
 
-      label {
+        label {
           display: block;
           margin-bottom: 20px;
           margin-top: 5px;
           text-align: left;
-      }
+        }
 
-      input {
+        input {
           width: 100%;
           padding: 5px;
           margin-bottom: 10px;
           border: 1px solid #ccc;
           border-radius: 5px;
-      }
+        }
       `}</style>
       <div className="principal">
         <div className="Registro">
-          <h1>RECUPERAR SENHA</h1>
-          <h3>Você poderá fazer login nesta conta de usuário com a nova senha</h3>
-          <label htmlFor="Email">Email:</label><br />
+          <h1>FAÇA LOGIN</h1>
+          <h3>Para aqueles que já tem conta  no Puc-go</h3>
+
+          <label htmlFor="Email">Email:</label>
           <input type="text" name="Email" />
-          <label htmlFor="NovaSenha">Digite uma nova senha:</label><br />
-          <input type="text" name="NovaSenha" />
-          <label htmlFor="ConfirmarSenha">Digite a senha novamente para confirmá-la:</label><br />
-          <input type="text" name="ConfirmarSenha" />
-        <input
-          onClick={() => (window.location.href = 'index.html')}
-          value="GO"
-          type="button"
-          id="go"
-        />
-        </div>  
+          <label htmlFor="Senha">Senha:</label>
+          <input type="password" name="Senha" />
+
+          <button id="go" onClick={toLogin}>GO</button>
+        </div>
       </div>
     </div>
   );
