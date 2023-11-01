@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Començando 
 
 Para rodar esse projeto é essencial que voce tenha node.js intalado na sua maquina os seguintes requisitos: 
@@ -8,6 +6,7 @@ Para rodar esse projeto é essencial que voce tenha node.js intalado na sua maqu
 - Pacote de gerenciamento npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) ou yarn ou qualquer semelhante
 
 ## Primeiros passos para rodar localmente
+
 Primeramente rode :
 ```bash
 npm run dev
