@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 import Head from "next/head";
+import { registerUser } from '@/firebase/authentication';
+import { app } from 'firebase-admin';
+import { getAuth } from 'firebase/auth';
+import { userInfo } from 'os';
 
 export default function Register() {
   const [nome, setNome] = useState('');
@@ -8,11 +12,14 @@ export default function Register() {
   const [genero, setGenero] = useState('');
   const [tel, setTel] = useState('');
 
+  const auth = getAuth(userInfo);
+
+
   // Função para redirecionar para a página de login
   const redirectToLogin = () => {
     // Usamos o componente Link para navegação no Next.js
     // Substitua '/login' pelo caminho real da sua página de login
-    window.location.href = '/principal';
+    window.location.href = '/login';
   };
 
   const nomeChange = (e) => {
@@ -56,6 +63,7 @@ export default function Register() {
             .principal {
                 display: block;
                 text-align: center;
+                color: black;
             }
 
             .Registro {
@@ -97,30 +105,28 @@ export default function Register() {
                 margin-bottom: 10px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
+                color: black;
             }
           `}
         </style>
       </Head>
       <div className="principal">
         <div className="Registro">
-        <h1>Cadastra-se</h1>
-          <h3>Se cadastre aqui e em breve você terá acesso ao Puc-go</h3>
-
           <label htmlFor="Nome">Nome</label>
           <input type="text" name="Nome" onChange={nomeChange} />
 
           <label htmlFor="Email">Email</label>
-          <input type="text" name="Email" onChange={emailChange} />
+          <input type="text" name="Email" onChange={(e)=>{setEmail(e.target.value)} } />
 
           <label htmlFor="Senha">Senha</label>
-          <input type="text" name="Senha" onChange={senhaChange} />
+          <input type="text" name="Senha" onChange={(e)=>{setSenha(e.target.value)} } />
           <label htmlFor="Genero">Gênero</label>
 
           <input type="text" name="Genero" onChange={generoChange} />
           <label htmlFor="Telefone">Telefone</label>
 
           <input type="text" name="Telefone" onChange={telChange} />
-          <button id="go" onClick={redirectToLogin}>GO</button>
+          <button id="go" onClick={ (e) => { registerUser(email,senha) } } >GO</button>
 
         </div>
       </div>

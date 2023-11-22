@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
+import {loginUser } from '@/firebase/authentication';
 
 export default function LoginPage() {
-  
-    const toLogin = () => {
-        // Usamos o componente Link para navegação no Next.js
-        // Substitua '/login' pelo caminho real da sua página de login
-        window.location.href = '/principal';
-      };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');    
 
   return (
     <div>
@@ -77,13 +74,15 @@ export default function LoginPage() {
           <h3>Para aqueles que já tem conta  no Puc-go</h3>
 
           <label htmlFor="Email">Email:</label>
-          <input type="text" name="Email" />
-          <label htmlFor="Senha">Senha:</label>
-          <input type="password" name="Senha" />
+          <input type="email" onChange= {(e) => {setEmail(e.target.value)}}/>
 
-          <button id="go" onClick={toLogin}>GO</button>
+          <label htmlFor="Senha">Senha:</label>
+          <input type="password" onChange= {(e) => {setPassword(e.target.value)}} />
+
+          <button id="go" onClick= {(e) => {loginUser(email,password)}} >GO</button>
         </div>
       </div>
     </div>
   );
 }
+
