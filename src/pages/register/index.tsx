@@ -52,10 +52,10 @@ export default function Register() {
             <input type="text" name="Nome" />
             <label htmlFor="Email">Email</label>
             <br />
-            <input type="text" name="Email" />
+            <input type="text" name="Email" onChange={(e)=>{setEmail(e.target.value)}/>
             <label htmlFor="Senha">Senha</label>
             <br />
-            <input type="text" name="Senha" />
+            <input type="text" name="Senha" onChange={(e)=>{setSenha(e.target.value)}/>
             <label htmlFor="Genero">Gênero</label>
             <br />
             <input type="text" name="Genero" />
@@ -64,7 +64,7 @@ export default function Register() {
             <input type="text" name="Telefone" />
           </div>
           <div>
-            <input value="GO" type="button" id="go" />
+            <input value="GO" type="button" id="go" onClick{(e) => {registerUser(email,password)}/>
           </div>
         </div>
       </div>
