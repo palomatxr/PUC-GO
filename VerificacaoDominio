@@ -1,0 +1,20 @@
+function finalEmail(email: string) {
+  var indiceArroba = 0
+  for (let i = 0; i < email.length; i++) {
+    if (email[i] == "@") {
+      indiceArroba = i
+      break
+    }
+  }
+  var dominio = email.slice(indiceArroba + 1, email.length)
+  return dominio
+}
+
+function ehDominio(dominioRecebido: string) {
+  if (dominioRecebido == "@puc-rio.br") {
+    return true
+  }
+  return false
+}
+
+console.log(ehDominio("tzirw@example.com"))
