@@ -9,23 +9,6 @@ const dataBase = getFirestore(app);
 
 const googleAuthProvider = new GoogleAuthProvider();
 
-const registerUser = async (email: string, password: string) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    //Adicionar usuario ao banco de dados
-    await addDoc(collection(dataBase, "users"), {
-      uid: user.uid,
-      name,
-      authProvider: "local",
-      email
-    })
-  } catch (error) {
-    console.error('Erro ao registrar usuário:', error);
-    throw error;
-  }
-};
-
 const loginUser = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -70,7 +53,33 @@ const loginWithGoogle = async () => {
       console.error('Erro ao fazer login com a conta do Google:', error);
       throw error;
     }
-  };
-  
+};
 
-export { auth, registerUser, loginUser, logoutUser, loginWithGoogle, logout };
+
+const registerUser = async (email: string, password: string, additionalData: { nome: any; genero: any; telefone: any; }) => {
+    const auth = getAuth();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      const userAdditionalData = {
+        nome: additionalData.nome,
+        genero: additionalData.genero,
+        telefone: additionalData.telefone,
+      };
+  
+      //Adicionar usuario ao banco de dados
+      await addDoc(collection(dataBase, "users"), {
+        uid: user.uid,
+        authProvider: "local",
+        email,
+        userAdditionalData
+      })
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  };  
+
+export { auth, loginUser, logoutUser, loginWithGoogle, logout, registerUser as registerUser};

@@ -6,6 +6,20 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');    
 
+  const redirectToMap = () => {
+    window.location.href = '/principal';
+  };
+
+  const handleRegister = async (email: string, senha: string) => {
+    try {
+      await loginUser(email,password);
+      redirectToMap();
+    } catch (error) {
+      throw error;
+      // Tratar erros ou exibir uma mensagem para o usuário
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -79,7 +93,7 @@ export default function LoginPage() {
           <label htmlFor="Senha">Senha:</label>
           <input type="password" onChange= {(e) => {setPassword(e.target.value)}} />
 
-          <button id="go" onClick= {(e) => {loginUser(email,password)}} >GO</button>
+          <button id="go" onClick= {(e) => {handleRegister(email,password)}} >GO</button>
         </div>
       </div>
     </div>
