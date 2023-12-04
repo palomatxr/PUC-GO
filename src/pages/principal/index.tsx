@@ -1,31 +1,87 @@
 import Head from 'next/head';
-import Image from 'next/image'
-import React, { useEffect } from 'react';
-import maplibregl from 'maplibre-gl';
+import Image from 'next/image';
+import React, {useEffect, useState } from 'react';
+import { GoogleMap, LoadScript, Marker , StandaloneSearchBox } from '@react-google-maps/api';
+import { findUser } from '@/firebase/querries';
+
+type Position = {
+  lat: number;
+  lng: number;
+};
 
 export default function PrincipalMap() {
-  const toLogin = () => {
-    window.location.href = '/login';
+  const [currentPosition, setCurrentPosition] = useState<Position | null>(null);
+  const [userData, setUserData] = useState();
+
+  const [pointB, setPointB] = React.useState<google.maps.LatLngLiteral>();
+
+  const [origin, setOrigin] = React.useState<google.maps.LatLngLiteral | null>(
+    null
+  );
+  const [destination, setDestination] =
+    React.useState<google.maps.LatLngLiteral | null>(null);
+
+  const [response, setResponse] =
+    React.useState<google.maps.DistanceMatrixResponse | null>(null);
+  
+  const [searchBoxB, setSearchBoxB] =
+    React.useState<google.maps.places.SearchBox>();
+
+  const [selectedDestination, setSelectedDestination] = useState<Position | null>(null);
+
+  const handleFindUser = async () =>{
+    try{
+      const userData = await findUser();
+      if (userData) {
+        console.log(userData.userAdditionalData); // Aqui está o objeto data
+        window.alert(`
+        Alguem pode te acompanhar nessa volta para casa ! 
+        O nome é ${userData.userAdditionalData.nome}, seu telefone é ${userData.userAdditionalData.telefone} !
+        Entre em contato ! `);
+      }
+    } catch (e) {
+      console.log("Error ao buscar user")
+    }
+  }
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentPosition({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error('Error getting the location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }, []);
+
+  const handlePlaceSelected = (place: any) => {
+    const location = {
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+    };
+    setSelectedDestination(location);
+    setPointB(location); 
   };
 
-  /* useEffect(() => {
-    const key = 'YhHsv9wIrpJVmMcw6HXf';
-
-    const map = new maplibregl.Map({
-      container: 'map',
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${key}`,
-      center: [0.11, 51.49],
-      zoom: 6,
-    });
-
-    const london = new maplibregl.Marker()
-      .setLngLat([0.11, 51.49])
-      .addTo(map);
-
-    map.on('error', function (err) {
-      throw new Error("To load the map, you must replace YOUR_MAPTILER_API_KEY_HERE first, see README");
-    });
-  }, []); */
+  const onPlacesChangedB = () => {
+    const places = searchBoxB!.getPlaces();
+    console.log(places);
+    const place = places![0];
+    const location = {
+      lat: place?.geometry?.location?.lat() || 0,
+      lng: place?.geometry?.location?.lng() || 0,
+    };
+    setPointB(location);
+    setOrigin(null);
+    setDestination(null);
+    setResponse(null);
+  };
 
   return (
     <div>
@@ -46,7 +102,7 @@ export default function PrincipalMap() {
         
         .header {
           position: absolute;
-          top: 5px;
+          top: 3px;
           left: 50px;
           width: 300px;
           height: 300px;
@@ -69,7 +125,7 @@ export default function PrincipalMap() {
         .sidebar {
           position: fixed;
           left: 50px;
-          top: 230px;
+          top: 270px;
           width: 300px;
           height: 100%;
           color: white;
@@ -95,13 +151,13 @@ export default function PrincipalMap() {
         .checkboxes-container {
           margin-top: 20px;
           position: fixed;
-          top: 300px; /* Ajuste essa posição conforme necessário */
+          top: 330px; 
           padding: 10px;
           border: 1px solid #ccc;
           color: white;
           font-size: 20px;
-          overflow-y: auto; /* Add this property to enable vertical scrolling */
-          max-height: calc(100vh - 350px); /* Adjust the max height as needed */
+          overflow-y: auto; 
+          max-height: calc(100vh - 350px); 
         }
 
         .checkboxes-container input {
@@ -113,33 +169,69 @@ export default function PrincipalMap() {
           display: block;
           margin: 5px 0;
         }
+
+        .map{
+          width: 170vh;
+          height: 95vh;
+          position: absolute;
+          top: 10px;
+          left: 360px;
+        }
       `}</style>
 
       <div className="header">
             <Image src="/PUC-GO-2-removebg-preview.png" alt="Puc-Go" width={250} height={350} />
       </div>
 
+      <LoadScript googleMapsApiKey="AIzaSyAwiGGvtWLsUxLhhtgOzUbwLSLZhXwzBDA" libraries={['places']}>
 
-      <div className="sidebar">
-        <div className="search-bar">
-          <input type="text" className="search-input" placeholder="Pesquisar destino..." />
-        </div>
-        <div className="checkboxes-container">
-          <input type="checkbox" name="opcoes" /> ÔNIBUS
-          <input type="checkbox" name="opcoes" /> A PÉ
-          <input type="checkbox" name="opcoes" /> CARRO 4PSS (MOTORISTA)
-          <input type="checkbox" name="opcoes" /> CARRO 7PSS (MOTORISTA)
-          <input type="checkbox" name="opcoes" /> METRÔ
-          <input type="checkbox" name="opcoes" /> METRÔ NA SUPERFÍCIE
-          <input type="checkbox" name="opcoes" /> CARRO 4PSS (PASSAGEIRO)
-          <input type="checkbox" name="opcoes" /> CARRO 7PSS (PASSAGEIRO)
-        </div>
-      </div>
-      
-      <div className="containerMap">
-        <iframe width="500" height="400" src="https://api.maptiler.com/maps/basic-v2/?key=YhHsv9wIrpJVmMcw6HXf#3.3/-24.23322/-43.98134"></iframe>
-      </div> 
+        <div className="sidebar">
+          <div className="search-bar">
+        
+            <StandaloneSearchBox
+              onLoad={(ref) => setSearchBoxB(ref)}
+              onPlacesChanged={() => {
+                const places = searchBoxB?.getPlaces();
+                if (places && places[0]) {
+                  handlePlaceSelected(places[0]);
+                }
+                onPlacesChangedB();
+              }}
+              >
+              <input
+                type="text" 
+                className="search-input" 
+                placeholder="Pesquisar destino..."
+              />
+            </StandaloneSearchBox>
 
+          </div>
+          <div className="checkboxes-container">
+            <input type="checkbox" name="opcoes" /> ÔNIBUS
+            <input type="checkbox" name="opcoes" /> A PÉ
+            <input type="checkbox" name="opcoes" /> CARRO 4PSS (MOTORISTA)
+            <input type="checkbox" name="opcoes" /> CARRO 7PSS (MOTORISTA)
+            <input type="checkbox" name="opcoes" /> METRÔ
+            <input type="checkbox" name="opcoes" /> METRÔ NA SUPERFÍCIE
+            <input type="checkbox" name="opcoes" /> CARRO 4PSS (PASSAGEIRO)
+            <input type="checkbox" name="opcoes" /> CARRO 7PSS (PASSAGEIRO)
+          </div>
+        </div> 
+
+        <div className='map'>
+            <GoogleMap
+              mapContainerStyle={{ width: '100%', height: '100%' }}
+              center={currentPosition || { lat: -22.977726, lng: -43.232090 }}
+              zoom={15}
+            >
+              {currentPosition && <Marker position={currentPosition} />}
+              {selectedDestination && 
+              <Marker 
+                position={selectedDestination}
+                onClick={handleFindUser}/>}
+            </GoogleMap>
+        </div>
+      </LoadScript>
     </div>
   );
 }

@@ -9,15 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@maptiler/sdk": "^1.1.2",
+    "@react-google-maps/api": "^2.19.2",
     "firebase": "^10.6.0",
     "firebase-admin": "^11.11.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-google-autocomplete": "^2.7.3",
     "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
+    "@types/googlemaps": "^3.43.3",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",

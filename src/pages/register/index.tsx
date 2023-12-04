@@ -14,22 +14,6 @@ export default function Register() {
     window.location.href = '/login';
   };
 
-  const nomeChange = (e) => {
-    setNome(e.target.value);
-  };
-  const emailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const senhaChange = (e) => {
-    setSenha(e.target.value);
-  };
-  const generoChange = (e) => {
-    setGenero(e.target.value);
-  };
-  const telChange = (e) => {
-    setTel(e.target.value);
-  };
-
   const handleRegister = async (email: string,senha: string, additionalData: { nome: any; genero: any; telefone: any; }) => {
     try {
       await registerUser(email, senha, { nome, genero, telefone: tel });
